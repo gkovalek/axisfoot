@@ -10,5 +10,11 @@ export const SITE = {
   city: 'Córdoba, Argentina', // TODO
 }
 
+// Video de fondo del hero. Cuando exista el archivo, completar las rutas (relativas a /public).
+export const HERO_VIDEO = null
+// Ejemplo: { mp4: 'videos/hero.mp4', webm: 'videos/hero.webm', poster: 'videos/hero.jpg' }
+
+export const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`
+
 export const whatsappLink = (message) =>
   `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(message)}`

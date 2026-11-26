@@ -2,13 +2,13 @@ import { I18nProvider } from './i18n/I18nProvider'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
-import { Stats } from './components/Stats'
-import { Technology } from './components/Technology'
-import { Catalog } from './components/Catalog'
+import { Insoles } from './components/Insoles'
+import { Equipment } from './components/Equipment'
 import { Process } from './components/Process'
-import { About } from './components/About'
+import { Join } from './components/Join'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { WhatsAppFab } from './components/WhatsAppFab'
 
 const Site = () => {
   useSmoothScroll()
@@ -18,14 +18,14 @@ const Site = () => {
       <Navbar />
       <main>
         <Hero />
-        <Stats />
-        <Technology />
-        <Catalog />
+        <Insoles />
+        <Equipment />
         <Process />
-        <About />
+        <Join />
         <Contact />
       </main>
       <Footer />
+      <WhatsAppFab />
     </>
   )
 }

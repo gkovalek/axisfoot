@@ -1,25 +1,49 @@
-// Fuente: catálogo técnico FX Insoles (19 modelos). Zonas: T1 pulgar, T2-5 dedos,
-// M1-M5 metatarsianos, MF mediopié, HL/HM talón exterior/interior.
-export const CATEGORIES = ['sport', 'care']
+// Los 19 modelos del catálogo técnico, agrupados para el visitante (sin códigos internos).
+// Todos se ofrecen en talles 24 a 53.
+export const SIZE_RANGE = '24–53'
+
+export const GROUPS = ['health', 'sport', 'daily']
 
 export const CATALOG = [
-  { code: 'FX202201', category: 'sport', color: '#2c8f5a', zones: 'T1 · M1–2 · HM', name: { es: 'Aire libre', en: 'Outdoor' } },
-  { code: 'FX202204', category: 'sport', color: '#c8281e', zones: 'T1 · M1–3 · HL · HM', name: { es: 'Básquet · arco', en: 'Basketball · arch' } },
-  { code: 'FX202206', category: 'sport', color: '#e5521f', zones: 'T1 · M1–3 · HL · HM', name: { es: 'Básquet · impacto', en: 'Basketball · impact' } },
-  { code: 'FX202207', category: 'sport', color: '#5bf018', zones: 'M2 · M3', name: { es: 'Maratón', en: 'Marathon' } },
-  { code: 'FX202209', category: 'sport', color: '#7ddc1f', zones: 'M2 · M3', name: { es: 'Jogging', en: 'Jogging' } },
-  { code: 'FX202210', category: 'sport', color: '#2f7cf0', zones: 'T1 · M1–5 · HL · HM', name: { es: 'Esquí', en: 'Ski' } },
-  { code: 'FX202212', category: 'sport', color: '#4ce31f', zones: 'M1–5 · HL · HM', name: { es: 'Fútbol', en: 'Football' } },
-  { code: 'FX202213', category: 'sport', color: '#1d5fd6', zones: 'M2 · M3 · M4', name: { es: 'Bádminton', en: 'Badminton' } },
-  { code: 'FX202215', category: 'sport', color: '#cfe8b0', zones: 'M2 · M3 · M5', name: { es: 'Golf', en: 'Golf' } },
-  { code: 'FX202217', category: 'sport', color: '#c4421c', zones: 'M1–5 · HL · HM', name: { es: 'Gimnasio', en: 'Gym & fitness' } },
-  { code: 'FX202220', category: 'sport', color: '#4de6a4', zones: 'T1 · M1–5 · HL · HM', name: { es: 'Ciclismo', en: 'Cycling' } },
-  { code: 'FX202228', category: 'sport', color: '#2b6fe0', zones: 'T1 · M1–5 · HL · HM', name: { es: 'Skate', en: 'Skate' } },
-  { code: 'FX202218', category: 'care', color: '#b0592b', zones: 'M1–5 · HL · HM', name: { es: 'Hallux valgus', en: 'Hallux valgus' } },
-  { code: 'FX202222', category: 'care', color: '#3fd9a8', zones: 'M1–5 · HL · HM', name: { es: 'Pie plano', en: 'Flat foot' } },
-  { code: 'FX202224', category: 'care', color: '#5ea8f0', zones: 'M1–5 · HL · HM · T1', name: { es: 'Dolor de talón', en: 'Heel pain' } },
-  { code: 'FX202226', category: 'care', color: '#3a3f47', zones: 'M1–5 · HL · HM', name: { es: 'Calzado formal', en: 'Dress shoes' } },
-  { code: 'FX202233', category: 'care', color: '#b0592b', zones: 'M1–5 · HL · HM · T1', name: { es: 'Fascitis plantar', en: 'Plantar fasciitis' } },
-  { code: 'FX202236', category: 'care', color: '#a3322a', zones: 'M1–3 · HL · HM', name: { es: 'Jornadas de pie', en: 'Long hours standing' } },
-  { code: 'FX202239', category: 'care', color: '#3fd9a8', zones: 'M1–3 · HL · HM', name: { es: 'Caminata diaria', en: 'Daily walking' } },
+  // Salud
+  { id: 'hallux', group: 'health', name: { es: 'Juanete (hallux valgus)', en: 'Bunion (hallux valgus)' },
+    solves: { es: 'Corrige el apoyo del arco, reparte la presión y estabiliza el pie para aliviar el dolor del juanete al caminar.', en: 'Corrects arch support, spreads pressure and steadies the foot to ease bunion pain when walking.' } },
+  { id: 'flat', group: 'health', name: { es: 'Pie plano', en: 'Flat foot' },
+    solves: { es: 'Sostiene el arco caído, mejora la forma de caminar y reduce la fatiga del pie.', en: 'Supports a fallen arch, improves your gait and reduces foot fatigue.' } },
+  { id: 'heel', group: 'health', name: { es: 'Dolor de talón', en: 'Heel pain' },
+    solves: { es: 'Descarga el talón y la planta con amortiguación para aliviar la presión y el dolor al apoyar.', en: 'Cushions the heel and sole to relieve pressure and pain with every step.' } },
+  { id: 'fascia', group: 'health', name: { es: 'Fascitis plantar', en: 'Plantar fasciitis' },
+    solves: { es: 'Sostiene el arco y amortigua antepié y talón para reducir la tensión de la planta y el dolor al caminar.', en: 'Supports the arch and cushions forefoot and heel to reduce sole tension and walking pain.' } },
+  // Deportivas
+  { id: 'outdoor', group: 'sport', name: { es: 'Aire libre y trekking', en: 'Outdoor & trekking' },
+    solves: { es: 'Absorbe impactos y da agarre en terrenos irregulares o resbalosos, con soporte de arco y tobillo.', en: 'Absorbs impact and grips on uneven or slippery ground, with arch and ankle support.' } },
+  { id: 'basket-arch', group: 'sport', name: { es: 'Básquet · soporte de arco', en: 'Basketball · arch support' },
+    solves: { es: 'Da estabilidad en frenadas y giros rápidos y amortigua saltos y aterrizajes.', en: 'Steadies sudden stops and fast turns and cushions jumps and landings.' } },
+  { id: 'basket-cushion', group: 'sport', name: { es: 'Básquet · amortiguación reforzada', en: 'Basketball · extra cushioning' },
+    solves: { es: 'Suma amortiguación en talón y antepié para jugar más tiempo con menos fatiga.', en: 'Adds heel and forefoot cushioning to play longer with less fatigue.' } },
+  { id: 'marathon', group: 'sport', name: { es: 'Maratón', en: 'Marathon' },
+    solves: { es: 'Amortigua el impacto de la distancia y alivia la fatiga del pie en carreras largas.', en: 'Cushions long-distance impact and eases foot fatigue over big miles.' } },
+  { id: 'jogging', group: 'sport', name: { es: 'Running y jogging', en: 'Running & jogging' },
+    solves: { es: 'Comodidad y amortiguación para correr con regularidad, cuidando arco y talón.', en: 'Comfort and cushioning for regular runs, looking after arch and heel.' } },
+  { id: 'ski', group: 'sport', name: { es: 'Esquí', en: 'Skiing' },
+    solves: { es: 'Mejora el soporte lateral y la estabilidad en descensos y giros, y amortigua el terreno.', en: 'Improves lateral support and stability on descents and turns, and cushions rough snow.' } },
+  { id: 'football', group: 'sport', name: { es: 'Fútbol', en: 'Football' },
+    solves: { es: 'Estabilidad lateral y amortiguación para cambios de dirección, piques y remates.', en: 'Lateral stability and cushioning for cuts, sprints and shots.' } },
+  { id: 'racket', group: 'sport', name: { es: 'Bádminton y raqueta', en: 'Badminton & racket sports' },
+    solves: { es: 'Estabilidad lateral y amortiguación para movimientos rápidos y cambios de dirección en la cancha.', en: 'Lateral stability and cushioning for quick moves and direction changes on court.' } },
+  { id: 'golf', group: 'sport', name: { es: 'Golf', en: 'Golf' },
+    solves: { es: 'Sostiene el swing con estabilidad y alivia la fatiga de caminar el campo.', en: 'Steadies your swing and eases fatigue from walking the course.' } },
+  { id: 'gym', group: 'sport', name: { es: 'Gimnasio y entrenamiento', en: 'Gym & training' },
+    solves: { es: 'Soporte de arco y amortiguación para saltos, giros y ejercicios de impacto.', en: 'Arch support and cushioning for jumps, turns and high-impact workouts.' } },
+  { id: 'cycling', group: 'sport', name: { es: 'Ciclismo', en: 'Cycling' },
+    solves: { es: 'Apoyo firme sobre el pedal, menos vibración y un pie ventilado en cada salida.', en: 'Firm support on the pedal, less vibration and a ventilated foot on every ride.' } },
+  { id: 'skate', group: 'sport', name: { es: 'Skate', en: 'Skateboarding' },
+    solves: { es: 'Amortigua golpes y aterrizajes y da agarre y sostén del arco sobre la tabla.', en: 'Cushions hits and landings with grip and arch support on the board.' } },
+  // Uso diario
+  { id: 'walk', group: 'daily', name: { es: 'Caminata diaria', en: 'Daily walking' },
+    solves: { es: 'Comodidad y estabilidad para caminar todos los días, con amortiguación en talón y antepié.', en: 'Comfort and stability for everyday walking, with heel and forefoot cushioning.' } },
+  { id: 'standing', group: 'daily', name: { es: 'Jornadas de pie', en: 'Long hours on your feet' },
+    solves: { es: 'Alivia el cansancio y la carga sobre el pie si trabajás muchas horas de pie.', en: 'Eases tiredness and load on the foot if you work long hours standing.' } },
+  { id: 'dress', group: 'daily', name: { es: 'Zapato de vestir', en: 'Dress shoes' },
+    solves: { es: 'Soporte de arco y talón para que el calzado formal sea cómodo toda la jornada.', en: 'Arch and heel support so formal shoes stay comfortable all day.' } },
 ]

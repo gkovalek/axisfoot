@@ -41,7 +41,7 @@ const EASE = {
   float: 'sine.inOut',
 }
 
-const DIM_OPACITY = 0.35
+const DIM_OPACITY = 0.45
 
 // Idle intro (seconds).
 const INTRO = {
@@ -54,12 +54,6 @@ const INTRO = {
   explode: 1.2,
   explodeStagger: 0.06,
   fastForward: 4,
-}
-
-// Pose of the whole stage before scrolling, leaving room for the hero copy.
-const STAGE_ENTRY = {
-  desktop: { x: '14vw', y: '3svh', scale: 0.8 },
-  mobile: { x: 0, y: '43svh', scale: 0.9 },
 }
 
 const FLOAT = { amplitudePx: 7, period: 3.2 }
@@ -143,7 +137,7 @@ function setActiveStep(root, index) {
 
 function buildIntro(q) {
   const intros = q('.ia-intro')
-  const tl = gsap.timeline({ delay: INTRO.delay })
+  const tl = gsap.timeline({ delay: INTRO.delay, paused: true })
 
   // Bottom layer first, rising into the stack.
   tl.fromTo(
@@ -251,7 +245,7 @@ function addRelease(tl, q) {
     .to({}, { duration: T.tail })
 }
 
-function buildScroll(q, root, { pinLength, entry, intro, onProgressRef }) {
+function buildScroll(q, root, { pinLength, intro, onProgressRef }) {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: root,
@@ -272,7 +266,6 @@ function buildScroll(q, root, { pinLength, entry, intro, onProgressRef }) {
     },
   })
 
-  tl.fromTo(q('.ia-stage'), entry, { x: 0, y: 0, scale: 1, duration: T.assemble, ease: EASE.move }, 0)
   addAssemble(tl, q)
   tl.set(q('.ia-callouts, .ia-list'), { opacity: 1 }, 'assembled')
   STEP_ORDER.forEach((id, i) => addStep(tl, q, id, i))
@@ -303,11 +296,17 @@ export function InsoleAssembly({
       const q = gsap.utils.selector(root)
       const mm = gsap.matchMedia()
 
-      const animated = (pinLength, entry) => {
+      const animated = (pinLength) => {
         const intro = buildIntro(q)
         const float = buildFloat(q)
         intro.eventCallback('onComplete', () => float.play())
-        buildScroll(q, root.current, { pinLength, entry, intro, onProgressRef })
+        ScrollTrigger.create({
+          trigger: root.current,
+          start: 'top 80%',
+          once: true,
+          onEnter: () => intro.play(),
+        })
+        buildScroll(q, root.current, { pinLength, intro, onProgressRef })
 
         // Only drift while the stage is on screen.
         ScrollTrigger.create({
@@ -320,8 +319,8 @@ export function InsoleAssembly({
         })
       }
 
-      mm.add(MEDIA.desktop, () => animated(PIN_LENGTH.desktop, STAGE_ENTRY.desktop))
-      mm.add(MEDIA.mobile, () => animated(PIN_LENGTH.mobile, STAGE_ENTRY.mobile))
+      mm.add(MEDIA.desktop, () => animated(PIN_LENGTH.desktop))
+      mm.add(MEDIA.mobile, () => animated(PIN_LENGTH.mobile))
       mm.add(MEDIA.reduced, () => {
         // Static exploded state, everything legible, no pin or scrub.
         root.current.setAttribute('data-static', '')

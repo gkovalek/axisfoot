@@ -13,26 +13,18 @@ export const Contact = () => {
   ]
 
   return (
-    <Section id="contact" index="05" eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead}>
+    <Section id="contacto" eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead} tone="sky">
       <div className="grid gap-12 md:grid-cols-[1fr_1.2fr]">
         <div data-reveal>
-          <a
-            href={whatsappLink(t.contact.message)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-14 items-center gap-3 rounded-full bg-green px-8 text-base font-semibold text-ink transition-transform duration-150 hover:brightness-110 active:scale-[0.96]"
-          >
-            {t.contact.whatsapp} <span aria-hidden="true">↗</span>
-          </a>
-          <p className="eyebrow mt-8">{t.contact.b2b}</p>
+          <a href={whatsappLink(t.contact.message)} target="_blank" rel="noopener noreferrer" className="btn btn-primary !min-h-14 !px-9 !text-base">{t.contact.whatsapp} <span aria-hidden="true">↗</span></a>
         </div>
-        <dl className="border-t border-line">
+        <dl className="border-t border-line-strong">
           {channels.map((channel) => (
-            <div key={channel.label} data-reveal className="grid grid-cols-[8rem_1fr] gap-4 border-b border-line py-5">
+            <div key={channel.label} data-reveal className="grid grid-cols-[7.5rem_1fr] gap-4 border-b border-line-strong py-5">
               <dt className="eyebrow pt-1">{channel.label}</dt>
-              <dd className="text-lg">
+              <dd className="min-w-0 break-words text-lg font-semibold">
                 {channel.href
-                  ? <a href={channel.href} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:text-green">{channel.value}</a>
+                  ? <a href={channel.href} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:text-blue">{channel.value}</a>
                   : channel.value}
               </dd>
             </div>
