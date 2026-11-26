@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n/I18nProvider'
-import { assetUrl } from '../data/site'
+import { LEGAL_ENTITY, assetUrl } from '../data/site'
 
 export const Footer = () => {
   const { t } = useI18n()
@@ -13,7 +13,10 @@ export const Footer = () => {
           <a href={assetUrl('terminos/index.html')} className="text-slate transition-colors hover:text-blue">{t.footer.terms}</a>
           <a href="#inicio" className="text-slate transition-colors hover:text-blue">{t.footer.top} ↑</a>
         </nav>
-        <p className="eyebrow text-center">© {new Date().getFullYear()} Axis Foot · Argentina · {t.footer.rights}</p>
+        <div className="text-center">
+          <p className="eyebrow">© {new Date().getFullYear()} Axis Foot · {t.footer.rights}</p>
+          <p className="eyebrow mt-1 !normal-case !tracking-wider">{LEGAL_ENTITY}</p>
+        </div>
       </div>
     </footer>
   )

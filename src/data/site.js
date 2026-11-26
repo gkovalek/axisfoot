@@ -10,6 +10,8 @@ export const SITE = {
   city: 'Resistencia, Chaco, Argentina',
 }
 
+export const LEGAL_ENTITY = 'Rpeg Salud Integral S.R.L. · CUIT 33-71901171-9'
+
 // Video de fondo del hero. Cuando exista el archivo, completar las rutas (relativas a /public).
 export const HERO_VIDEO = null
 // Ejemplo: { mp4: 'videos/hero.mp4', webm: 'videos/hero.webm', poster: 'videos/hero.jpg' }
