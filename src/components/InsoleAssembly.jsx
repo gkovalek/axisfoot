@@ -41,9 +41,10 @@ const EASE = {
   float: 'sine.inOut',
 }
 
-const DIM_OPACITY = 0.45
-// Las descripciones inactivas se mantienen legibles; la activa se destaca por estilo.
-const NOTE_DIM_OPACITY = 0.62
+// Capas que no se están mirando: casi desaparecen para que la activa se perciba sola.
+const DIM_OPACITY = 0.12
+// Etiquetas de las otras capas: se ocultan, se muestra una descripción por vez.
+const NOTE_HIDDEN_OPACITY = 0
 
 // Idle intro (seconds).
 const INTRO = {
@@ -131,7 +132,7 @@ function setActiveStep(root, index) {
   root.querySelectorAll('[data-step]').forEach((el) => {
     el.toggleAttribute('data-active', Number(el.dataset.step) === index)
   })
-  root.querySelectorAll('.ia-list-item, .ia-callout').forEach((el) => {
+  root.querySelectorAll('.ia-layer, .ia-list-item, .ia-callout').forEach((el) => {
     el.toggleAttribute('data-active', stepIndex(el.dataset.id) === index)
   })
 }
@@ -203,7 +204,7 @@ function addAssemble(tl, q) {
     .to(q('.ia-callout-text'), { opacity: 0, duration: T.calloutRetract, ease: EASE.fade }, 'assemble')
     .to(q('.ia-line'), { scaleX: 0, duration: T.calloutRetract, ease: EASE.fade }, 'assemble')
     .to(q('.ia-dot'), { scale: 0, opacity: 0, duration: T.calloutRetract, ease: EASE.fade }, 'assemble')
-    .to(q('.ia-list-item'), { opacity: NOTE_DIM_OPACITY, duration: T.calloutRetract, ease: EASE.fade }, 'assemble')
+    .to(q('.ia-list-item'), { opacity: 1, duration: T.calloutRetract, ease: EASE.fade }, 'assemble')
     .to(layers, {
       yPercent: (i, el) => assembledYPercent(el.dataset.id),
       rotation: (i, el) => ASSEMBLED[el.dataset.id].rotate,
@@ -226,7 +227,7 @@ function addStep(tl, q, id, i) {
   tl.addLabel(label)
     .to(p.layer, { yPercent: 0, rotation: 0, opacity: 1, duration: T.stepMove, ease: EASE.move }, label)
     .to(otherLayers, { opacity: DIM_OPACITY, duration: T.stepMove, ease: EASE.fade }, label)
-    .to(otherNotes, { opacity: NOTE_DIM_OPACITY, duration: T.stepMove, ease: EASE.fade }, label)
+    .to(otherNotes, { opacity: NOTE_HIDDEN_OPACITY, duration: T.stepMove, ease: EASE.fade }, label)
     .to([...p.callout, ...p.item], { opacity: 1, duration: T.stepMove, ease: EASE.fade }, label)
     .to(p.line, { scaleX: 1, duration: T.stepCallout, ease: EASE.draw }, calloutAt)
     .to(p.dot, { scale: 1, opacity: 1, duration: T.stepCallout, ease: EASE.draw }, calloutAt)

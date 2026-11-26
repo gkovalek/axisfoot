@@ -357,3 +357,62 @@
     bottom: 3.6rem;
   }
 }
+
+
+/* ---------- Capa activa: contorno resaltado ---------- */
+
+.ia-layer img {
+  transition: filter 0.4s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ia-layer[data-active] img {
+  filter:
+    drop-shadow(2px 0 0 var(--ia-outline))
+    drop-shadow(-2px 0 0 var(--ia-outline))
+    drop-shadow(0 2px 0 var(--ia-outline))
+    drop-shadow(0 -2px 0 var(--ia-outline))
+    drop-shadow(0 0 14px rgb(26 110 224 / 0.55));
+}
+
+.ia {
+  --ia-outline: var(--color-blue-bright, #1a6ee0);
+}
+
+/* ---------- Celular: una descripción por vez, sin superposiciones ---------- */
+
+@media (max-width: 767.98px) {
+  .ia-inner {
+    gap: 1rem;
+  }
+
+  .ia-list {
+    min-height: 0;
+  }
+
+  .ia-list-item {
+    grid-area: 1 / 1;
+    visibility: hidden;
+  }
+
+  .ia-list-item[data-active] {
+    visibility: visible;
+  }
+
+  .ia-hint {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    gap: 8px;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+
+  .ia-steps {
+    position: static;
+    width: min(100% - 2.5rem, 28rem);
+    padding-right: 4.5rem;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+}
