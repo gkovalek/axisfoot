@@ -16,6 +16,7 @@
 }
 
 html {
+  color-scheme: dark;
   background: var(--color-ink);
   color: var(--color-snow);
   -webkit-font-smoothing: antialiased;

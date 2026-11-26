@@ -1,19 +1,42 @@
+import { useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { useI18n } from '../i18n/I18nProvider'
 import { InsoleAssembly } from './InsoleAssembly'
 
+gsap.registerPlugin(ScrollTrigger, useGSAP)
+
+const COPY_FADE_DISTANCE = 320
+const COPY_RISE_PX = -48
+
 export const Hero = () => {
   const { t } = useI18n()
+  const copy = useRef(null)
+
+  // El texto se desvanece al empezar a desarmar la plantilla.
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.to(copy.current, {
+        opacity: 0,
+        y: COPY_RISE_PX,
+        ease: 'none',
+        scrollTrigger: { start: 0, end: COPY_FADE_DISTANCE, scrub: true },
+      })
+    })
+  }, { scope: copy })
 
   return (
     <section id="top" className="relative">
       <div aria-hidden="true" className="hairline-grid pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-6 pt-28 md:pt-32">
+      <div ref={copy} className="pointer-events-none absolute inset-x-0 top-0 z-10 px-6 pt-28 motion-reduce:static md:pt-32">
         <div className="mx-auto max-w-6xl">
           <p className="eyebrow mb-6 flex items-center gap-3">
             <span className="size-1.5 rounded-full bg-green" />
             {t.hero.eyebrow}
           </p>
-          <h1 className="balance max-w-3xl text-5xl font-semibold leading-[0.98] tracking-tight md:text-8xl">
+          <h1 className="balance max-w-3xl text-5xl font-semibold leading-[0.98] tracking-tight md:text-7xl">
             {t.hero.title[0]}<br />
             <span className="text-blue-bright">{t.hero.title[1]}</span>
           </h1>

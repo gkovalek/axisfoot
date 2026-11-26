@@ -23,7 +23,7 @@ export const Navbar = () => {
     <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled || open ? 'border-b border-line bg-ink/80 backdrop-blur-xl' : 'border-b border-transparent'}`}>
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6" aria-label="Principal">
         <a href="#top" className="flex items-center gap-3" aria-label="Axis Foot">
-          <img src="/logo-transparente.png" alt="" width="40" height="40" className="size-10 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}logo-transparente.png`} alt="" width="40" height="40" className="size-10 object-contain" />
           <span className="text-sm font-semibold uppercase tracking-[0.22em]">Axis <span className="text-green">Foot</span></span>
         </a>
 

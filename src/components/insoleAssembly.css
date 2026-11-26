@@ -1,0 +1,272 @@
+/* InsoleAssembly — scroll-driven exploded/assembled insole hero.
+   Only transform + opacity are animated (by GSAP); nothing here transitions layout. */
+
+.ia {
+  --ia-bg: var(--color-ink, #07090d);
+  --ia-fg: var(--color-snow, #f4f6f8);
+  --ia-muted: var(--color-mist, #9aa5b4);
+  --ia-blue: var(--color-blue, #0053b4);
+  --ia-green: var(--color-green, #00c442);
+  --ia-hairline: rgb(255 255 255 / 0.28);
+  --ia-nav-offset: 4rem;
+  --ia-outset: clamp(120px, 15vw, 250px);
+  --ia-stage-w: min(58vw, calc((100svh - var(--ia-nav-offset) - 9rem) * 1296 / 985), 1040px);
+
+  position: relative;
+  height: 100svh;
+  overflow: clip;
+  background:
+    radial-gradient(60% 55% at 50% 52%, rgb(0 83 180 / 0.14), transparent 70%),
+    var(--ia-bg);
+  color: var(--ia-fg);
+}
+
+.ia-inner {
+  position: relative;
+  height: 100%;
+  padding-top: var(--ia-nav-offset);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Stage ---------- */
+
+.ia-stage {
+  position: relative;
+  width: var(--ia-stage-w);
+  aspect-ratio: 1296 / 985;
+}
+
+.ia-float,
+.ia-plane,
+.ia-callouts {
+  position: absolute;
+  inset: 0;
+}
+
+.ia-layer {
+  position: absolute;
+}
+
+.ia-intro,
+.ia-intro img {
+  width: 100%;
+  height: 100%;
+}
+
+.ia-intro img {
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Callouts (desktop) ---------- */
+
+.ia-callouts,
+.ia-list {
+  opacity: 0;
+}
+
+.ia[data-static] .ia-callouts,
+.ia[data-static] .ia-list {
+  opacity: 1;
+}
+
+.ia-callout {
+  position: absolute;
+  height: 1px;
+  pointer-events: none;
+}
+
+.ia-line {
+  position: absolute;
+  inset: 0;
+  transform-origin: right center;
+}
+
+.ia-callout[data-side='right'] .ia-line {
+  transform-origin: left center;
+}
+
+.ia-line-fill {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to left, var(--ia-hairline), rgb(255 255 255 / 0.06));
+  transform-origin: inherit;
+}
+
+.ia-callout[data-side='right'] .ia-line-fill {
+  background: linear-gradient(to right, var(--ia-hairline), rgb(255 255 255 / 0.06));
+}
+
+.ia-dot {
+  position: absolute;
+  top: -2.5px;
+  right: -2.5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ia-green);
+  box-shadow: 0 0 0 4px rgb(0 196 66 / 0.14);
+}
+
+.ia-callout[data-side='right'] .ia-dot {
+  right: auto;
+  left: -2.5px;
+}
+
+.ia-callout-text {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: max-content;
+  max-width: calc(var(--ia-outset) - 8px);
+  display: grid;
+  gap: 3px;
+}
+
+.ia-callout[data-side='right'] .ia-callout-text {
+  left: auto;
+  right: 0;
+  text-align: right;
+}
+
+.ia-index {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--ia-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.ia-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.ia-spec {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ia-muted);
+}
+
+/* ---------- Stacked list (mobile) ---------- */
+
+.ia-list {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Step indicator ---------- */
+
+.ia-steps {
+  position: absolute;
+  left: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  display: grid;
+  gap: 10px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ia-step-numbers {
+  display: flex;
+  gap: 14px;
+}
+
+.ia-step-numbers span {
+  color: rgb(255 255 255 / 0.32);
+  transition: color 0.3s ease;
+}
+
+.ia-step-numbers span[data-active],
+.ia[data-static] .ia-step-numbers span {
+  color: var(--ia-fg);
+}
+
+.ia-step-numbers span[data-active]::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--ia-green);
+}
+
+.ia-progress {
+  width: 100%;
+  height: 1px;
+  background: rgb(255 255 255 / 0.12);
+  overflow: hidden;
+}
+
+.ia-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--ia-blue), var(--ia-green));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.ia[data-static] .ia-progress-fill {
+  transform: none;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 767.98px) {
+  .ia {
+    --ia-nav-offset: 4rem;
+    --ia-stage-w: min(94vw, calc((100svh - var(--ia-nav-offset) - 20rem) * 1296 / 985));
+  }
+
+  .ia-inner {
+    justify-content: flex-start;
+    padding-top: calc(var(--ia-nav-offset) + 2.5rem);
+    gap: 1.75rem;
+  }
+
+  .ia-callouts {
+    display: none;
+  }
+
+  .ia-list {
+    display: grid;
+    width: min(100% - 2.5rem, 28rem);
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .ia-list-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    column-gap: 0.5rem;
+    row-gap: 2px;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .ia-list-item .ia-index {
+    grid-row: span 2;
+    padding-top: 2px;
+  }
+
+  .ia-steps {
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+}
