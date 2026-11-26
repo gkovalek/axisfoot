@@ -56,6 +56,11 @@ const INTRO = {
   fastForward: 4,
 }
 
+// Giro de 360° sobre el eje vertical de la pila (como una tapa sobre una mesa).
+// Cada capa se trata como un plano visto en perspectiva oblicua: el giro dentro de ese
+// plano es una transformación afín con eje largo inclinado y acortamiento transversal.
+const SPIN = { turns: 1, axisTiltDeg: 14, foreshortening: 0.42 }
+
 const FLOAT = { amplitudePx: 7, period: 3.2 }
 
 /* ------------------------------------------------------------------ */
@@ -115,6 +120,22 @@ const calloutStyle = ({ x, y, side }) =>
   side === 'left'
     ? { top: pct(y, CANVAS_H), left: 'calc(-1 * var(--ia-outset))', width: `calc(${pct(x, CANVAS_W)} + var(--ia-outset))` }
     : { top: pct(y, CANVAS_H), left: pct(x, CANVAS_W), right: 'calc(-1 * var(--ia-outset))' }
+
+/** Matriz CSS del giro de `deg` grados de un plano visto en perspectiva oblicua. */
+function spinMatrix(deg) {
+  const tilt = (-SPIN.axisTiltDeg * Math.PI) / 180
+  const turn = (deg * Math.PI) / 180
+  const [ct, st] = [Math.cos(tilt), Math.sin(tilt)]
+  const [cr, sr] = [Math.cos(turn), Math.sin(turn)]
+  const f = SPIN.foreshortening
+  // A = Rot(tilt) · diag(1, f);  L = A · Rot(turn) · A⁻¹
+  const a = [[ct, -st * f], [st, ct * f]]
+  const inv = [[ct, st], [-st / f, ct / f]]
+  const rot = [[cr, -sr], [sr, cr]]
+  const mul = (m, n) => m.map((row) => [0, 1].map((j) => row[0] * n[0][j] + row[1] * n[1][j]))
+  const l = mul(mul(a, rot), inv)
+  return `matrix(${l[0][0]}, ${l[1][0]}, ${l[0][1]}, ${l[1][1]}, 0, 0)`
+}
 
 /** Find which step (0..3) the timeline playhead is in, or -1. */
 function activeStepAt(tl) {
@@ -267,6 +288,14 @@ function buildScroll(q, root, { pinLength, intro, onProgressRef }) {
   })
 
   addAssemble(tl, q)
+  const spin = { deg: 0 }
+  const spinners = q('.ia-spin')
+  tl.to(spin, {
+    deg: 360 * SPIN.turns,
+    duration: T.assemble + T.hold,
+    ease: EASE.move,
+    onUpdate: () => spinners.forEach((el) => { el.style.transform = spinMatrix(spin.deg) }),
+  }, 'assemble')
   tl.set(q('.ia-callouts, .ia-list'), { opacity: 1 }, 'assembled')
   STEP_ORDER.forEach((id, i) => addStep(tl, q, id, i))
   addRelease(tl, q)
@@ -342,6 +371,7 @@ export function InsoleAssembly({
               {LAYERS.map((layer) => (
                 <div key={layer.id} className="ia-layer" data-id={layer.id} style={layerStyle(layer)}>
                   <div className="ia-intro">
+                    <div className="ia-spin">
                     <img
                       src={`${import.meta.env.BASE_URL}layers/${layer.id}.webp`}
                       width={layer.w}
@@ -350,6 +380,7 @@ export function InsoleAssembly({
                       decoding="async"
                       draggable={false}
                     />
+                    </div>
                   </div>
                 </div>
               ))}
