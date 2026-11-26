@@ -1,13 +1,13 @@
-// Datos de contacto. Reemplazar los marcados con TODO antes de publicar.
+// Datos de contacto del sitio.
 export const SITE = {
   name: 'Axis Foot',
   instagram: 'https://www.instagram.com/axisfoot.arg/',
   instagramHandle: '@axisfoot.arg',
-  whatsappNumber: '5493510000000', // TODO: número real (formato internacional, sin +)
-  whatsappDisplay: '+54 9 351 000 0000', // TODO
-  email: 'hola@axisfoot.com.ar', // TODO
-  address: 'Tu dirección aquí', // TODO
-  city: 'Córdoba, Argentina', // TODO
+  whatsappNumber: '5493624988405', // +54 9 362 498-8405 (formato internacional, sin +)
+  whatsappDisplay: '+54 362 498 8405',
+  email: 'axisfoot.arg@gmail.com',
+  address: 'Av. Rivadavia 178',
+  city: 'Resistencia, Chaco, Argentina',
 }
 
 // Video de fondo del hero. Cuando exista el archivo, completar las rutas (relativas a /public).
