@@ -14,6 +14,7 @@ export const es = {
     eyebrow: 'Nuestras plantillas',
     title: 'Diseñadas capa por capa.',
     lead: 'Cada plantilla combina materiales técnicos que sostienen, amortiguan y ventilan. Desplazá para verla armarse y desarmarse.',
+    hint: 'Seguí deslizando para ver cada capa',
     sizes: 'Talles',
     solves: 'Qué resuelve',
     groupsTitle: 'Elegí según lo que necesitás',

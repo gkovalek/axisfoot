@@ -14,6 +14,7 @@ export const en = {
     eyebrow: 'Our insoles',
     title: 'Designed layer by layer.',
     lead: 'Every insole combines technical materials that support, cushion and ventilate. Scroll to watch it come together and apart.',
+    hint: 'Keep scrolling to explore each layer',
     sizes: 'Sizes',
     solves: 'What it solves',
     groupsTitle: 'Choose by what you need',

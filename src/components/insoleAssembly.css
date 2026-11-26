@@ -51,14 +51,7 @@
   position: absolute;
 }
 
-.ia-spin {
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 50%;
-}
-
 .ia-intro,
-.ia-spin,
 .ia-intro img {
   width: 100%;
   height: 100%;
@@ -151,7 +144,7 @@
 }
 
 .ia-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -159,7 +152,7 @@
 }
 
 .ia-spec {
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.4;
   color: var(--ia-muted);
 }
@@ -276,5 +269,91 @@
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 16px;
+  }
+}
+
+
+/* ---------- Capa activa: la descripción se destaca ---------- */
+
+.ia-callout-text {
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ia-callout[data-active] .ia-title,
+.ia-list-item[data-active] .ia-title {
+  color: var(--ia-blue);
+}
+
+.ia-callout[data-active] .ia-spec,
+.ia-list-item[data-active] .ia-spec {
+  color: var(--ia-fg);
+  font-weight: 600;
+}
+
+.ia-callout[data-active] .ia-callout-text {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(11 27 51 / 0.06), 0 14px 28px -12px rgb(0 83 180 / 0.45);
+  outline: 1px solid rgb(0 83 180 / 0.2);
+}
+
+.ia-hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1rem, 4vh, 2rem);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ia-blue);
+  pointer-events: none;
+}
+
+.ia-chevron {
+  font-size: 18px;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ia-chevron {
+    animation: ia-bounce 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes ia-bounce {
+  0%, 100% { transform: translateY(-3px); opacity: 0.5; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+
+.ia[data-static] .ia-hint {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .ia-list-item {
+    padding-inline: 0.75rem;
+    border-left: 3px solid transparent;
+    border-radius: 0 10px 10px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .ia-list-item[data-active] {
+    border-left-color: var(--ia-blue);
+    background: rgb(0 83 180 / 0.08);
+  }
+
+  .ia-list-item[data-active] .ia-title {
+    font-size: 14px;
+  }
+
+  .ia-hint {
+    bottom: 3.6rem;
   }
 }

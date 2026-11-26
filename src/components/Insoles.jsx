@@ -85,7 +85,7 @@ export const Insoles = () => {
   return (
     <div id="plantillas">
       <ModuleHeader />
-      <InsoleAssembly labels={t.layers} />
+      <InsoleAssembly labels={t.layers} hint={t.insoles.hint} />
       <ModelGroups />
     </div>
   )
